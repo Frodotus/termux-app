@@ -84,6 +84,22 @@ public class TermuxAppSharedPreferences extends AppSharedPreferences {
 
 
 
+    public boolean shouldShowQuickLaunchBar() {
+        return SharedPreferenceUtils.getBoolean(mSharedPreferences, TERMUX_APP.KEY_SHOW_QUICK_LAUNCH_BAR, TERMUX_APP.DEFAULT_VALUE_SHOW_QUICK_LAUNCH_BAR);
+    }
+
+    public void setShowQuickLaunchBar(boolean value) {
+        SharedPreferenceUtils.setBoolean(mSharedPreferences, TERMUX_APP.KEY_SHOW_QUICK_LAUNCH_BAR, value, false);
+    }
+
+    public boolean toggleShowQuickLaunchBar() {
+        boolean newValue = !shouldShowQuickLaunchBar();
+        setShowQuickLaunchBar(newValue);
+        return newValue;
+    }
+
+
+
     public boolean isTerminalMarginAdjustmentEnabled() {
         return SharedPreferenceUtils.getBoolean(mSharedPreferences, TERMUX_APP.KEY_TERMINAL_MARGIN_ADJUSTMENT, TERMUX_APP.DEFAULT_TERMINAL_MARGIN_ADJUSTMENT);
     }

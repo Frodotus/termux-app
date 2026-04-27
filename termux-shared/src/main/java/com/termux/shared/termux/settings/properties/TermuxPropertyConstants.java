@@ -323,6 +323,9 @@ public final class TermuxPropertyConstants {
 
 
 
+    /** Defines the key for app shortcuts bar — comma-separated list of package names */
+    public static final String KEY_APP_SHORTCUTS = "app-shortcuts"; // Default: "app-shortcuts"
+
     /** Defines the key for extra keys */
     public static final String KEY_EXTRA_KEYS =  "extra-keys"; // Default: "extra-keys"
     //public static final String DEFAULT_IVALUE_EXTRA_KEYS = "[[ESC, TAB, CTRL, ALT, {key: '-', popup: '|'}, DOWN, UP]]"; // Single row
@@ -424,6 +427,7 @@ public final class TermuxPropertyConstants {
         KEY_SHORTCUT_RENAME_SESSION,
 
         /* String */
+        KEY_APP_SHORTCUTS,
         KEY_BACK_KEY_BEHAVIOUR,
         KEY_DEFAULT_WORKING_DIRECTORY,
         KEY_EXTRA_KEYS,

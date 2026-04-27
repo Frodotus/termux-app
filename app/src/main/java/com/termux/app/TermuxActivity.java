@@ -245,6 +245,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
         setTerminalToolbarView(savedInstanceState);
 
+        setQuickLaunchBar();
+
         setSettingsButtonView();
 
         setNewSessionButtonView();
@@ -536,6 +538,26 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             (mTermuxTerminalExtraKeys.getExtraKeysInfo() == null ? 0 : mTermuxTerminalExtraKeys.getExtraKeysInfo().getMatrix().length) *
             mProperties.getTerminalToolbarHeightScaleFactor());
         terminalToolbarViewPager.setLayoutParams(layoutParams);
+    }
+
+    private void setQuickLaunchBar() {
+        QuickLaunchBar bar = findViewById(R.id.quick_launch_bar);
+        if (bar == null) return;
+        java.util.List<String> packages = mProperties != null ? mProperties.getAppShortcuts() : java.util.Collections.emptyList();
+        if (packages.isEmpty()) {
+            bar.setVisibility(View.GONE);
+            return;
+        }
+        bar.setPackages(packages);
+        bar.setVisibility(mPreferences != null && mPreferences.shouldShowQuickLaunchBar() ? View.VISIBLE : View.GONE);
+    }
+
+    public void toggleQuickLaunchBar() {
+        QuickLaunchBar bar = findViewById(R.id.quick_launch_bar);
+        if (bar == null || mProperties == null || mProperties.getAppShortcuts().isEmpty()) return;
+        if (mPreferences != null) {
+            bar.setVisibility(mPreferences.toggleShowQuickLaunchBar() ? View.VISIBLE : View.GONE);
+        }
     }
 
     public void toggleTerminalToolbar() {

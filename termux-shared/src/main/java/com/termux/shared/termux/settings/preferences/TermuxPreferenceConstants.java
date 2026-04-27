@@ -104,6 +104,13 @@ public final class TermuxPreferenceConstants {
 
 
         /**
+         * Defines the key for whether to show the app shortcuts bar.
+         */
+        public static final String KEY_SHOW_QUICK_LAUNCH_BAR = "show_quick_launch_bar";
+        public static final boolean DEFAULT_VALUE_SHOW_QUICK_LAUNCH_BAR = true;
+
+
+        /**
          * Defines the key for whether the soft keyboard will be enabled, for cases where users want
          * to use a hardware keyboard instead.
          */

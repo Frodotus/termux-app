@@ -662,6 +662,17 @@ public abstract class TermuxSharedProperties {
         return (boolean) TermuxPropertyConstants.IVALUE_BACK_KEY_BEHAVIOUR_ESCAPE.equals(getInternalPropertyValue(TermuxPropertyConstants.KEY_BACK_KEY_BEHAVIOUR, true));
     }
 
+    public java.util.List<String> getAppShortcuts() {
+        String value = (String) getInternalPropertyValue(TermuxPropertyConstants.KEY_APP_SHORTCUTS, true);
+        if (value == null || value.trim().isEmpty()) return java.util.Collections.emptyList();
+        java.util.List<String> result = new java.util.ArrayList<>();
+        for (String pkg : value.split(",")) {
+            String trimmed = pkg.trim();
+            if (!trimmed.isEmpty()) result.add(trimmed);
+        }
+        return result;
+    }
+
     public String getDefaultWorkingDirectory() {
         return (String) getInternalPropertyValue(TermuxPropertyConstants.KEY_DEFAULT_WORKING_DIRECTORY, true);
     }
