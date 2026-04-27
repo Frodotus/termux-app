@@ -120,6 +120,8 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         runStartForeground();
 
         SystemEventReceiver.registerPackageUpdateEvents(this);
+
+        TermuxInstaller.setupAppListCache(this);
     }
 
     @SuppressLint("Wakelock")

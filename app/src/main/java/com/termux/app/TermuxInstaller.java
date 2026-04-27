@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.system.Os;
@@ -28,6 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -382,5 +386,29 @@ final class TermuxInstaller {
     }
 
     public static native byte[] getZip();
+
+    public static void setupAppListCache(final Context context) {
+        new Thread() {
+            public void run() {
+                try {
+                    final File cacheFile = new File(TermuxConstants.TERMUX_HOME_DIR_PATH, ".apps");
+                    final PackageManager pm = context.getPackageManager();
+                    final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+                    final PrintStream out = new PrintStream(new FileOutputStream(cacheFile));
+                    for (ApplicationInfo info : packages) {
+                        final Intent launch = pm.getLaunchIntentForPackage(info.packageName);
+                        if (launch == null) continue;
+                        final String name = info.loadLabel(pm).toString();
+                        final String component = launch.getComponent().flattenToShortString();
+                        out.println(name + "|" + component);
+                    }
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    Logger.logError("termux-applist", "Error writing app list cache: " + e.getMessage());
+                }
+            }
+        }.start();
+    }
 
 }
